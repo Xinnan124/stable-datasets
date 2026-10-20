@@ -1,4 +1,3 @@
-
 import numpy as np
 from PIL import Image as PILImage
 from scipy.io import loadmat
@@ -28,9 +27,7 @@ class OlivettiFaces(BaseDatasetBuilder):
             howpublished={AT&T Laboratories Cambridge}
         }""",
         assets={
-            "data": DownloadInfo(
-                url="https://ndownloader.figshare.com/files/5976027"
-            ),
+            "data": DownloadInfo(url="https://ndownloader.figshare.com/files/5976027"),
         },
     )
 
@@ -86,14 +83,10 @@ class OlivettiFaces(BaseDatasetBuilder):
         raw_faces = loadmat(data_path)["faces"]
 
         if raw_faces.shape != (4096, 400):
-            raise ValueError(
-                f"Unexpected Olivetti Faces shape: {raw_faces.shape}"
-            )
+            raise ValueError(f"Unexpected Olivetti Faces shape: {raw_faces.shape}")
 
         # Reproduce the official scikit-learn image orientation.
-        images = raw_faces.T.copy().reshape(
-            (400, 64, 64)
-        ).transpose(0, 2, 1)
+        images = raw_faces.T.copy().reshape((400, 64, 64)).transpose(0, 2, 1)
 
         labels = np.repeat(np.arange(40), 10)
 
@@ -109,7 +102,10 @@ class OlivettiFaces(BaseDatasetBuilder):
 
             pil_image = PILImage.fromarray(image, mode="L")
 
-            yield idx, {
-                "image": pil_image,
-                "label": int(label),
-            }
+            yield (
+                idx,
+                {
+                    "image": pil_image,
+                    "label": int(label),
+                },
+            )
