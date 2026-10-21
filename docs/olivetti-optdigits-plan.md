@@ -19,4 +19,4 @@ This PR aims to add two image classification datasets to `stable-datasets`:
 
 ## Status
 
-Work in progress. Implementation, tests, and evaluation results will be added in subsequent commits.
+Implementation completed. Both dataset builders, automated tests, and reproducible classification experiments have been added. See docs/olivetti-optdigits-validation.md for validation results.
