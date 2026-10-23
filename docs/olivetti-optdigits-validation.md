@@ -46,7 +46,7 @@ image properties, label types, and class coverage:
 - `stable_datasets/tests/images/test_olivetti_faces.py`
 - `stable_datasets/tests/images/test_optdigits.py`
 
-Both tests passed locally.
+All four tests passed locally.
 
 ## Source Consistency Validation
 
