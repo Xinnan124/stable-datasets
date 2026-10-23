@@ -69,6 +69,8 @@ Available Datasets
    galaxy10
    hasy_v2
    face_pointing
+   olivetti_faces
+   optdigits
    rock_paper_scissor
    linnaeus5
 
