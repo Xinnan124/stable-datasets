@@ -87,8 +87,10 @@ References
 
 - UCI Machine Learning Repository:
   https://archive.ics.uci.edu/dataset/80/optical+recognition+of+handwritten+digits
-- Original training and test files:
-  https://archive.ics.uci.edu/ml/machine-learning-databases/optdigits/
+- - Original training file:
+  https://archive.ics.uci.edu/ml/machine-learning-databases/optdigits/optdigits.tra
+- Original test file:
+  https://archive.ics.uci.edu/ml/machine-learning-databases/optdigits/optdigits.tes
 
 Citation
 --------
