@@ -18,6 +18,10 @@ The first 8 images of each identity are assigned to training, and
 the remaining 2 are assigned to testing. This is not an official
 train/test split provided by the original dataset.
 
+.. image:: teasers/olivetti_faces_teaser.png
+   :align: center
+   :width: 90%
+
 Data Structure
 --------------
 

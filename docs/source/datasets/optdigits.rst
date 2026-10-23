@@ -16,6 +16,10 @@ The builder preserves the original UCI training and test splits:
 - **Test**: 1,797 samples.
 - **Classes**: 10 digit labels, numbered 0 through 9.
 
+.. image:: teasers/optdigits_teaser.png
+   :align: center
+   :width: 90%
+
 Data Structure
 --------------
 
