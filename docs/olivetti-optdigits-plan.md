@@ -2,12 +2,12 @@
 
 ## Overview
 
-This PR aims to add two image classification datasets to `stable-datasets`:
+This PR adds two image classification datasets to `stable-datasets`:
 
 1. Olivetti Faces — 400 grayscale facial images representing 40 individuals.
 2. UCI Optdigits — 5,620 handwritten digit samples across 10 classes.
 
-## Planned Implementation
+## Implementation
 
 - Add dataset builders for both datasets.
 - Define image and classification-label schemas.
