@@ -37,3 +37,37 @@ def test_optdigits_dataset():
             labels.append(label)
 
         assert set(labels) == set(range(10))
+
+
+def test_optdigits_source_consistency():
+    """Compare all samples with the official UCI source files."""
+    from io import BytesIO
+    from urllib.request import urlopen
+
+    base_url = "https://archive.ics.uci.edu/ml/machine-learning-databases/optdigits/"
+
+    for split, filename, expected_count in [
+        ("train", "optdigits.tra", 3823),
+        ("test", "optdigits.tes", 1797),
+    ]:
+        with urlopen(base_url + filename, timeout=120) as response:
+            source_bytes = response.read()
+
+        source_data = np.loadtxt(BytesIO(source_bytes), delimiter=",", dtype=np.int32)
+
+        dataset = Optdigits(split=split)
+
+        assert source_data.shape == (expected_count, 65)
+        assert len(dataset) == expected_count
+
+        for index in range(expected_count):
+            raw_pixels = source_data[index, :-1].reshape(8, 8)
+            expected_image = np.rint(raw_pixels * (255.0 / 16.0)).astype(np.uint8)
+
+            sample = dataset[index]
+
+            np.testing.assert_array_equal(
+                np.asarray(sample["image"]),
+                expected_image,
+            )
+            assert int(sample["label"]) == int(source_data[index, -1])

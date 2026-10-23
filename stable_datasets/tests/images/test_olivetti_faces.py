@@ -48,3 +48,48 @@ def test_olivetti_faces_dataset():
 
     assert all(train_counts[label] == 8 for label in range(40))
     assert all(test_counts[label] == 2 for label in range(40))
+
+
+def test_olivetti_faces_source_consistency():
+    """Compare all samples against the original MAT source."""
+    from io import BytesIO
+    from urllib.request import urlopen
+
+    from scipy.io import loadmat
+
+    source_url = "https://ndownloader.figshare.com/files/5976027"
+    with urlopen(source_url, timeout=120) as response:
+        raw_bytes = response.read()
+
+    raw_faces = loadmat(BytesIO(raw_bytes))["faces"]
+    assert raw_faces.shape == (4096, 400)
+
+    expected_images = raw_faces.T.copy().reshape(400, 64, 64).transpose(0, 2, 1)
+
+    train_ds = OlivettiFaces(split="train")
+    test_ds = OlivettiFaces(split="test")
+
+    train_indices = set()
+    test_indices = set()
+
+    for identity in range(40):
+        for position in range(10):
+            source_index = identity * 10 + position
+
+            if position < 8:
+                sample = train_ds[identity * 8 + position]
+                train_indices.add(source_index)
+            else:
+                sample = test_ds[identity * 2 + position - 8]
+                test_indices.add(source_index)
+
+            np.testing.assert_array_equal(
+                np.asarray(sample["image"]),
+                expected_images[source_index],
+            )
+            assert int(sample["label"]) == identity
+
+    assert len(train_indices) == 320
+    assert len(test_indices) == 80
+    assert train_indices.isdisjoint(test_indices)
+    assert train_indices | test_indices == set(range(400))
